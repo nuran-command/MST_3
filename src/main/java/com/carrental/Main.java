@@ -1,17 +1,31 @@
 package com.carrental;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import com.carrental.model.Graph;
+import com.carrental.algorithms.*;
+import com.carrental.utils.*;
+import org.json.JSONObject;
+import java.util.*;
+
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        String inputPath = "data/input.json";
+        String outputPath = "data/output.json";
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        List<Graph> graphs = JSONReader.loadGraphs(inputPath);
+        List<JSONObject> results = new ArrayList<>();
+
+        PrimMST prim = new PrimMST();
+        KruskalMST kruskal = new KruskalMST();
+
+        for (Graph g : graphs) {
+            MSTResult primRes = prim.run(g);
+            MSTResult kruskalRes = kruskal.run(g);
+
+            JSONObject graphResult = JSONWriter.createGraphResult(g, primRes, kruskalRes);
+            results.add(graphResult);
         }
+
+        JSONWriter.writeResults(outputPath, results);
+        System.out.println("MST results written to " + outputPath);
     }
 }

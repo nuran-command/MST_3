@@ -1,13 +1,11 @@
-package mst;
+package com.carrental;
 
 import com.carrental.algorithms.*;
 import com.carrental.model.*;
 import com.carrental.utils.*;
-import org.json.JSONObject;
-import org.json.JSONArray;
 import org.junit.jupiter.api.*;
-
 import java.util.*;
+import com.carrental.model.MSTResult;
 
 import static org.junit.jupiter.api.Assertions.*;
 
